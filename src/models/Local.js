@@ -4,34 +4,28 @@ class Local extends Model {
 
   static init(sequelize) {
     super.init({
-      id_empresa: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: { msg: "O ID não pode ser nula!" },
-          notEmpty: { msg: "O ID não pode ser vazia!" },
-        }
-      },
-      nome_sabor: {
+      predio: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "O nome não pode ser nulo!" },
-          notEmpty: { msg: "O nome não pode ser vazio!" }
+          notNull: { msg: "O predio não pode ser nulo!" },
+          notEmpty: { msg: "O predio não pode ser vazia!" },
         }
       },
-      valor: {
-        type: DataTypes.DECIMAL,
+      andar: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "O valor não pode ser nulo!" },
-          notEmpty: { msg: "O valor não pode ser vazio!" }
+          notNull: { msg: "O andar não pode ser nulo!" },
+          notEmpty: { msg: "O andar não pode ser vazio!" }
         }
       },
-      id_imagem: {
-        type: DataTypes.INTEGER,
+      sala: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
+          notNull: { msg: "O sala não pode ser nulo!" },
+          notEmpty: { msg: "O sala não pode ser vazio!" }
         }
       },
       descricao: {
@@ -42,16 +36,12 @@ class Local extends Model {
           notEmpty: { msg: "A descrição não pode ser vazia!" }
         }
       },
-      status: {
-        type: DataTypes.BOOLEAN,
+      qr: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
-        }
-      },
-      id_categoria: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
+          notNull: { msg: "O QR não pode ser nulo!" },
+          notEmpty: { msg: "O QR não pode ser vazio!" }
         }
       }
     }, { sequelize, modelName: 'local', tableName: 'locais' }
