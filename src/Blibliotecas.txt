@@ -1,0 +1,17 @@
+Nome do banco acessibilidade
+
+
+npx expo install react-native-web@~0.18.10 react-dom@18.2.0 @expo/webpack-config@^18.0.1
+
+expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view 
+
+expo install @react-native-async-storage/async-storage
+
+npm install -g expo-cli
+npm install @react-navigation/stack
+npm install @react-navigation/native
+npm install --save-dev nodemon
+npm install express --save  cors sequelize  mysql2
+npm install --save-dev sequelize-cli
+npm install @react-navigation/bottom-tabs
+npm install react-toastify
