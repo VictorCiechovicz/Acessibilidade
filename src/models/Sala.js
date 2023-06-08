@@ -1,15 +1,15 @@
 import { Model, DataTypes } from 'sequelize';
 
-class Local extends Model {
+class Sala extends Model {
 
   static init(sequelize) {
     super.init({
-      local: {
+      sala: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "O Local não pode ser nulo!" },
-          notEmpty: { msg: "O Local não pode ser vazio!" },
+          notNull: { msg: "A Sala não pode ser nula!" },
+          notEmpty: { msg: "A Sala não pode ser vazia!" },
         }
       },
       menssagem1: {
@@ -43,13 +43,15 @@ class Local extends Model {
           notEmpty: { msg: "O QR não pode ser vazio!" }
         }
       }
-    }, { sequelize, modelName: 'local', tableName: 'locais' }
+    }, { sequelize, modelName: 'sala', tableName: 'salas' }
     )
   }
 
   static associate(models) {
+    this.belongsTo(models.predio, {as: 'predio', foreignKey: {name: 'predioId' , allowNull: false, validate: {notNull: {msg: 'Prédio da Sala deve ser preenchido!'}}}});
+    
   }
 
 }
 
-export { Local };
+export { Sala };

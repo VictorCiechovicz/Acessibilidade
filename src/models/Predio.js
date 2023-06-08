@@ -1,10 +1,10 @@
 import { Model, DataTypes } from 'sequelize';
 
-class Local extends Model {
+class Predio extends Model {
 
   static init(sequelize) {
     super.init({
-      local: {
+      predio: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -43,13 +43,13 @@ class Local extends Model {
           notEmpty: { msg: "O QR não pode ser vazio!" }
         }
       }
-    }, { sequelize, modelName: 'local', tableName: 'locais' }
+    }, { sequelize, modelName: 'predio', tableName: 'predios' }
     )
   }
 
   static associate(models) {
+    this.belongsTo(models.local, {as: 'local', foreignKey: {name: 'localId' , allowNull: false, validate: {notNull: {msg: 'Local do Prédio deve ser preenchido!'}}}});
   }
-
 }
 
-export { Local };
+export { Predio };
