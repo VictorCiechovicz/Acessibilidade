@@ -3,7 +3,9 @@ import { Text, View, Button, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Pages from './src/pages';
-import Cor from './src/css/cores.json';
+
+const corMenu = "#75f542";
+const corTextoMenu = "#000000";
 
 export default function App() {
 
@@ -12,13 +14,26 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen
+          name="AreaRestrita"
+          component={Pages.AreaRestrita}
+          options={{
+            title: "Area Administrativa",
+            headerStyle: { backgroundColor: corMenu },
+            headerTintColor: corTextoMenu,
+            headerTitleStyle:
+            {
+              fontWeight: 'bold',
+              alignSelf: 'center'
+            }
+          }} />
         <Stack.Screen
           name="Home"
           component={Pages.Home}
           options={{
             title: "Acessibilidade",
-            headerStyle: { backgroundColor: `${Cor.menu}` },
-            headerTintColor: `${Cor.textoMenu}`,
+            headerStyle: { backgroundColor: corMenu },
+            headerTintColor: corTextoMenu,
             headerTitleStyle:
             {
               fontWeight: 'bold',
@@ -26,46 +41,34 @@ export default function App() {
             }
           }}
         />
-        <Stack.Screen 
-        name="Login" 
-        component={Pages.Login} 
-        options={{
-          //headerShown: false,
-          title: "Logar",
-          headerStyle: { backgroundColor: `${Cor.menu}` },
-          headerTintColor: `${Cor.textoMenu}`,
-          headerTitleStyle:
-          {
-            fontWeight: 'bold',
-            alignSelf: 'center'
-          }
-        }} />
         <Stack.Screen
-          name="Rastreio"
-          component={Pages.Rastreio}
+          name="Login"
+          component={Pages.Login}
           options={{
-            title: "Navegar",
-            headerStyle: { backgroundColor: `${Cor.menu}` },
-            headerTintColor: `${Cor.textoMenu}`,
+            //headerShown: false,
+            title: "Logar",
+            headerStyle: { backgroundColor: corMenu },
+            headerTintColor: corTextoMenu,
             headerTitleStyle:
             {
               fontWeight: 'bold',
               alignSelf: 'center'
             }
           }} />
-        <Stack.Screen 
-        name="Area Administrativa"
-        component={Pages.AreaRestrita}
-        options={{
-          title: "Area Administrativa",
-          headerStyle: { backgroundColor: `${Cor.menu}` },
-          headerTintColor: `${Cor.textoMenu}`,
-          headerTitleStyle:
-          {
-            fontWeight: 'bold',
-            alignSelf: 'center'
-          }
-        }} />
+        <Stack.Screen
+          name="Rastreio"
+          component={Pages.Rastreio}
+          options={{
+            title: "Navegar",
+            headerStyle: { backgroundColor: corMenu },
+            headerTintColor: corTextoMenu,
+            headerTitleStyle:
+            {
+              fontWeight: 'bold',
+              alignSelf: 'center'
+            }
+          }} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

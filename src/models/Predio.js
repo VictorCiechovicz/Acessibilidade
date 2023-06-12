@@ -12,7 +12,7 @@ class Predio extends Model {
           notEmpty: { msg: "O Local não pode ser vazio!" },
         }
       },
-      menssagem1: {
+      mensagem1: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -20,7 +20,7 @@ class Predio extends Model {
           notEmpty: { msg: "A Mensagem não pode ser vazia!" }
         }
       },
-      menssagem2: {
+      mensagem2: {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
@@ -33,6 +33,14 @@ class Predio extends Model {
         validate: {
           notNull: { msg: "O Audio não pode ser nulo!" },
           notEmpty: { msg: "O Audio não pode ser vazio!" }
+        }
+      },
+      imagem: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "O Imagem não pode ser nula!" },
+          notEmpty: { msg: "O Imagem não pode ser vazia!" }
         }
       },
       qr: {

@@ -14,17 +14,17 @@ class SalaService {
   }
 
   static async create(req) {
-    const { sala , menssagem1, menssagem2, audio, qr  } = req.body;
-    const obj = await Sala.create({ sala , menssagem1, menssagem2, audio, qr });
+    const { sala , mensagem1, mensagem2, audio, imagem, qr  } = req.body;
+    const obj = await Sala.create({ sala , mensagem1, mensagem2, audio, imagem, qr });
     return await Sala.findByPk(obj.id, { include: { all: true, nested: true } });
   }
 
   static async update(req) {
     const { id } = req.params;
-    const { sigla, nome } = req.body;
+    const { sala , mensagem1, mensagem2, audio, imagem, qr } = req.body;
     const obj = await Sala.findByPk(id, { include: { all: true, nested: true } });
     if (obj == null) throw 'Sala não encontrada!';
-    Object.assign(obj, { sigla, nome });
+    Object.assign(obj, { sala , mensagem1, mensagem2, audio, imagem, qr });
     return await obj.save();
   }
 

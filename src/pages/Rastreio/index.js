@@ -1,14 +1,16 @@
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, Text, SafeAreaView } from 'react-native';
-import {button, menu} from '../../css/index';
+import css from '../../css/css';
 
 export default function Rastreio({ navigation }) {
 
     return (
-        <SafeAreaView style={menu.menuSuperior}>
+        <SafeAreaView style={css.menuSuperior}>
+            <StatusBar style="light" />
             <Text>Aqui vai a regra para navegação</Text>
-            <TouchableOpacity style={button.button} onPress={() => navigation.navigate('Home')}>
-                <Text style={button.buttonText}>Home</Text>                    
+            <TouchableOpacity style={css.buttonGeral} onPress={() => navigation.navigate('Home')}>
+                <Text style={css.buttonTextGeral}>Home</Text>                    
             </TouchableOpacity>
         </SafeAreaView>
     );

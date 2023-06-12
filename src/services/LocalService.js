@@ -1,5 +1,4 @@
 import { Local } from '../models/Local.js';
-
 class LocalService {
 
   static async findAll() {
@@ -14,17 +13,17 @@ class LocalService {
   }
 
   static async create(req) {
-    const { sigla, nome } = req.body;
-    const obj = await Local.create({ sigla, nome });
-    return await Usuario.findByPk(obj.id, { include: { all: true, nested: true } });
+    const { local , mensagem1, mensagem2, audio, imagem, qr  } = req.body;
+    const obj = await Local.create({ local , mensagem1, mensagem2, audio, imagem, qr });
+    return await Local.findByPk(obj.id, { include: { all: true, nested: true } });
   }
 
   static async update(req) {
     const { id } = req.params;
-    const { local , menssagem1, menssagem2, audio, qr } = req.body;
+    const { local , mensagem1, mensagem2, audio, imagem, qr } = req.body;
     const obj = await Local.findByPk(id, { include: { all: true, nested: true } });
     if (obj == null) throw 'Local não encontrado!';
-    Object.assign(obj, { local , menssagem1, menssagem2, audio, qr });
+    Object.assign(obj, { local , mensagem1, mensagem2, audio, imagem, qr  });
     return await obj.save();
   }
 

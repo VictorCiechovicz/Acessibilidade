@@ -14,17 +14,17 @@ class PredioService {
   }
 
   static async create(req) {
-    const { sigla, nome } = req.body;
-    const obj = await Predio.create({ sigla, nome });
+    const { predio , mensagem1, mensagem2, audio, imagem, qr } = req.body;
+    const obj = await Predio.create({ predio , mensagem1, mensagem2, audio, imagem, qr });
     return await Predio.findByPk(obj.id, { include: { all: true, nested: true } });
   }
 
   static async update(req) {
     const { id } = req.params;
-    const { predio , menssagem1, menssagem2, audio, qr } = req.body;
+    const { predio , mensagem1, mensagem2, audio, imagem, qr } = req.body;
     const obj = await Predio.findByPk(id, { include: { all: true, nested: true } });
     if (obj == null) throw 'Prédio não encontrado!';
-    Object.assign(obj, { predio , menssagem1, menssagem2, audio, qr });
+    Object.assign(obj, { predio , mensagem1, mensagem2, audio, imagem, qr });
     return await obj.save();
   }
 
