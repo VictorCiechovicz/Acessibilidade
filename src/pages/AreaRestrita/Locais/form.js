@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import css from '../../../css/css.js';
 
-export default function form({ onAddLocal, onEditLocal, localData }) {
+export default function form({ onAddLocal, onEditLocal, localData, onClose }) {
   const [local, setLocal] = useState(localData?.local || '');
   const [mensagem1, setMensagem1] = useState(localData?.mensagem1 || '');
   const [mensagem2, setMensagem2] = useState(localData?.mensagem2 || '');
@@ -11,7 +10,17 @@ export default function form({ onAddLocal, onEditLocal, localData }) {
   const [imagem, setImagem] = useState(localData?.imagem || '');
   const [qr, setQr] = useState(localData?.qr || '');
 
-  const navigation = useNavigation();
+  useEffect(() => {
+    if (localData) {
+      setLocal(localData.local || '');
+      setMensagem1(localData.mensagem1 || '');
+      setMensagem2(localData.mensagem2 || '');
+      setAudio(localData.audio || '');
+      setImagem(localData.imagem || '');
+      setQr(localData.qr || '');
+    }
+  }, [localData]);
+
 
   const handleSave = () => {
     const newLocal = {
@@ -21,10 +30,10 @@ export default function form({ onAddLocal, onEditLocal, localData }) {
       audio,
       imagem,
       qr,
-    };    
+    };
 
     if (localData) {
-      // Se existir localData, significa que estamos em modo de edição
+      //(localData.local);// Se existir localData, significa que estamos em modo de edição
       newLocal.id = localData.id;
       onEditLocal(newLocal);
     } else {
@@ -32,7 +41,16 @@ export default function form({ onAddLocal, onEditLocal, localData }) {
       onAddLocal(newLocal);
     }
 
-    // Limpar os campos após salvar
+    if (!localData) {
+      limparDados();
+
+    }
+
+    onClose();
+
+  };
+
+  const limparDados = () => {
     setLocal('');
     setMensagem1('');
     setMensagem2('');
@@ -41,6 +59,11 @@ export default function form({ onAddLocal, onEditLocal, localData }) {
     setQr('');
   };
 
+  const cancelar = () => {
+    limparDados();
+    onClose();
+    // Chama a função onClose para fechar o formulário
+  };
 
   return (
     <View style={css.formContainer}>
@@ -91,10 +114,12 @@ export default function form({ onAddLocal, onEditLocal, localData }) {
         onChangeText={setQr}
         placeholder="Digite o QR"
       />
-
       <TouchableOpacity style={css.formButton} onPress={handleSave}>
         <Text style={css.formButtonText}>Salvar</Text>
       </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={css.formButton} onPress={cancelar}>
+        <Text style={css.formButtonText}>Cancelar</Text>
+      </TouchableOpacity>
+    </View>
   );
 }

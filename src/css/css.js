@@ -31,7 +31,7 @@ const css = StyleSheet.create({
         color: 'black'
     },
 
-    buttonIncluir: {        
+    buttonIncluir: {
         position: 'absolute',
         bottom: 10,
         right: 10,
@@ -42,25 +42,25 @@ const css = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 2,
-      },
+    },
 
-      buttonIncluirText: {
+    buttonIncluirText: {
         fontSize: 24,
         color: '#FFF',
-      },
+    },
 
-      
-      content: {
+
+    content: {
         flex: 1,
-      },
+    },
 
-      searchInput:{
+    searchInput: {
         backgroundColor: '#f2f2f2',
         borderRadius: 20,
         paddingVertical: 4,
         paddingHorizontal: 10,
         marginBottom: 5,
-      },
+    },
     buttonContainerListar: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -97,7 +97,7 @@ const css = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
     },
-    modalMessage: {
+    modalMesage: {
         fontSize: 16,
         marginBottom: 20,
         textAlign: 'center',
@@ -121,41 +121,43 @@ const css = StyleSheet.create({
         marginBottom: 20,
         marginHorizontal: 20,
         elevation: 2,
-      },
-    
-      formTitle: {
+    },
+
+    formTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
-      },
-    
-      formInput: {
+    },
+
+    formInput: {
         backgroundColor: '#F4F4F4',
         height: 40,
         borderRadius: 4,
         paddingHorizontal: 10,
         marginBottom: 10,
-      },
-    
-      formButton: {
-        backgroundColor: '#2980B9',
-        height: 40,
-        borderRadius: 4,
-        justifyContent: 'center',
+    },
+
+    formButton: {
+        backgroundColor: '#4287f5',
+        borderRadius: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginTop: 20,
         alignItems: 'center',
-      },
-    
-      formButtonText: {
-        color: '#FFF',
+    },
+
+    formButtonText: {
+        color: '#ffffff',
         fontWeight: 'bold',
-      },
+        fontSize: 16,
+    },
 
     container: {
         flex: 1,
         backgroundColor: '#fff',
         paddingHorizontal: 5,
-        
+
     },
     container2: {
         flex: 1,
@@ -169,10 +171,10 @@ const css = StyleSheet.create({
     },
 
 
-    viewPrincipal:{
+    viewPrincipal: {
         flex: 10,
     },
-    viewSecundaria:{
+    viewSecundaria: {
         flex: 1,
     },
 

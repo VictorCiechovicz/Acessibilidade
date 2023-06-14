@@ -16,19 +16,19 @@ export default function Locais({ navigation }) {
     const [modalQr, setModalQr] = useState('');
     const [searchText, setSearchText] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [localData, setLocalData] = useState(null);
+   
+    
 
     useEffect(() => {
         buscaDados();
-        console.log(data);
     }, []);
 
     const buscaDados = async () => {
         try {
             const response = await fetch(`${config.urlRoot}locais/`);
             const data = await response.json();
-
             setData(data);
-
         } catch (error) {
             console.error('Erro ao buscar dados:', error);
         }
@@ -39,48 +39,6 @@ export default function Locais({ navigation }) {
             return data;
         }
         return data.filter(item => item.local.toLowerCase().includes(searchText.toLowerCase()));
-    };
-
-    const handleAddLocal = async (form) => {
-        try {
-            const response = await fetch(`${config.urlRoot}locais/`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    local: form.local,
-                    mensagem1: form.mensagem1,
-                    mensagem2: form.mensagem2,
-                    audio: form.audio,
-                    imagem: form.imagem,
-                    qr: form.qr
-                }),
-                headers: {
-                    //Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            //const data = await response.json();
-            //console.log(data);
-
-            if (response.ok) {
-                // O novo local foi adicionado com sucesso
-                setIsFormVisible(false);
-                buscaDados();
-            } else {
-                console.error('Erro ao adicionar o novo local:', data.error);
-            }
-        } catch (error) {
-            console.error('Erro ao adicionar o novo local:', error);
-        }
-        console.log('Novo local:', form);
-    };
-
-
-    const handleEditLocal = (editedLocal) => {
-        // Lógica para editar o local
-        console.log('Local editado:', editedLocal);
-        setIsFormVisible(false);
-        buscaDados();
     };
 
     const Deletar = async (item) => {
@@ -120,7 +78,6 @@ export default function Locais({ navigation }) {
 
     const Audio = (item) => {
         console.log('O audio é:', item.audio);
-
     };
 
     const QrCode = (item) => {
@@ -130,6 +87,55 @@ export default function Locais({ navigation }) {
 
     const Imagem = (item) => {
         console.log('A imagem é:', item.imagem);
+    };
+
+    const handleAddLocal = async (form) => {
+        try {
+            const response = await fetch(`${config.urlRoot}locais/`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    local: form.local,
+                    mensagem1: form.mensagem1,
+                    mensagem2: form.mensagem2,
+                    audio: form.audio,
+                    imagem: form.imagem,
+                    qr: form.qr
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (response.ok) {
+                //setIsFormVisible(false);
+                buscaDados();
+            } else { console.error('Erro ao adicionar o novo local:', data.error); }
+        } catch (error) { console.error('Erro ao adicionar o novo local:', error); }
+    };
+
+    const handleCloseForm = () => {
+        setIsFormVisible(false);
+        setLocalData(null);
+    };
+
+    const handleEditLocal = async (form) => {
+        setIsFormVisible(true);
+        setLocalData(form);
+        try {
+            const response = await fetch(`${config.urlRoot}locais/${form.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    local: form.local,
+                    mensagem1: form.mensagem1,
+                    mensagem2: form.mensagem2,
+                    audio: form.audio,
+                    imagem: form.imagem,
+                    qr: form.qr
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (response.ok) {
+                buscaDados();
+                //setIsFormVisible(false);          
+            } else { console.error('Erro ao editar o local:', response.status); }
+        } catch (error) { console.error('Erro ao editar o local:', error); }
     };
 
     return (
@@ -175,7 +181,7 @@ export default function Locais({ navigation }) {
                             </View> : "",
                             (
                                 <View style={[css.actionContainerListar]}>
-                                    <TouchableOpacity style={css.buttonListar} onPress={() => Editar(item)}>
+                                    <TouchableOpacity style={css.buttonListar} onPress={() => handleEditLocal(item)}>
                                         <Icon name="edit" color="black" size={15} />
                                     </TouchableOpacity>
                                     <TouchableOpacity style={css.buttonListar} onPress={() => Deletar(item)}>
@@ -186,7 +192,6 @@ export default function Locais({ navigation }) {
                         ])}
                         style={css.tableRowSeparatorListar}
                     />
-
                 </Table>
 
                 <Modal isVisible={isModalVisibleMensage}>
@@ -201,7 +206,7 @@ export default function Locais({ navigation }) {
                 <Modal isVisible={isModalVisibleQr}>
                     <View style={css.modalContainer}>
                         <Text style={css.modalTitle}>O QrCode Informado foi:</Text>
-                        <Text style={css.modalMessage}>{modalQr}</Text>
+                        <Text style={css.modalMesage}>{modalQr}</Text>
                         <TouchableOpacity style={css.modalButton} onPress={() => setIsModalVisibleQr(false)}>
                             <Text style={css.modalButtonText}>Fechar</Text>
                         </TouchableOpacity>
@@ -212,10 +217,15 @@ export default function Locais({ navigation }) {
 
                 <Modal isVisible={isFormVisible}>
                     <View style={css.modalContainer}>
-                        <Form
-                            onAddLocal={handleAddLocal}
-                            onEditLocal={handleEditLocal}
-                        />
+
+                        {isFormVisible && (
+                            <Form
+                                onAddLocal={handleAddLocal}
+                                onEditLocal={handleEditLocal}
+                                localData={localData}
+                                onClose={handleCloseForm}
+                            />
+                        )}
                     </View>
                 </Modal>
             </View>
