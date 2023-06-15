@@ -113,7 +113,11 @@ const css = StyleSheet.create({
         color: 'white',
         fontSize: 16,
     },
-
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginTop: 5,
+      },
     formContainer: {
         backgroundColor: '#FFF',
         padding: 20,

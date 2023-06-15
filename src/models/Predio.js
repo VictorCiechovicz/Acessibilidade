@@ -13,7 +13,7 @@ class Predio extends Model {
         }
       },
       mensagem1: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           notNull: { msg: "A Mensagem não pode ser nula!" },
@@ -21,7 +21,7 @@ class Predio extends Model {
         }
       },
       mensagem2: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
         validate: {
           

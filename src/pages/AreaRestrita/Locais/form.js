@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import css from '../../../css/css.js';
 
-export default function form({ onAddLocal, onEditLocal, localData, onClose }) {
+export default function form({ onAddLocal, onEditLocal, localData, onClose, errorResponse }) {
   const [local, setLocal] = useState(localData?.local || '');
   const [mensagem1, setMensagem1] = useState(localData?.mensagem1 || '');
   const [mensagem2, setMensagem2] = useState(localData?.mensagem2 || '');
   const [audio, setAudio] = useState(localData?.audio || '');
   const [imagem, setImagem] = useState(localData?.imagem || '');
   const [qr, setQr] = useState(localData?.qr || '');
+
+  console.log("Aqui");
+  console.log('errorResponse:', errorResponse);
 
   useEffect(() => {
     if (localData) {
@@ -67,6 +70,7 @@ export default function form({ onAddLocal, onEditLocal, localData, onClose }) {
 
   return (
     <View style={css.formContainer}>
+
       <Text style={css.formLabel}>Local:</Text>
       <TextInput
         style={css.formInput}
@@ -74,7 +78,9 @@ export default function form({ onAddLocal, onEditLocal, localData, onClose }) {
         onChangeText={setLocal}
         placeholder="Digite o local"
       />
-
+      {errorResponse && errorResponse.local && (
+        <Text style={css.errorText}>{errorResponse.local}</Text>
+      )}
       <Text style={css.formLabel}>Mensagem 1:</Text>
       <TextInput
         style={css.formInput}
@@ -82,6 +88,9 @@ export default function form({ onAddLocal, onEditLocal, localData, onClose }) {
         onChangeText={setMensagem1}
         placeholder="Digite a mensagem 1"
       />
+      {errorResponse && errorResponse.mensagem1 && (
+        <Text style={css.errorText}>{errorResponse.mensagem1}</Text>
+      )}
 
       <Text style={css.formLabel}>Mensagem 2:</Text>
       <TextInput

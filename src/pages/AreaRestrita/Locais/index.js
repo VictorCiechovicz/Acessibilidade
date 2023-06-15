@@ -17,8 +17,9 @@ export default function Locais({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [localData, setLocalData] = useState(null);
-   
-    
+    const [errorResponse, setErrorResponse] = useState(null);
+
+
 
     useEffect(() => {
         buscaDados();
@@ -89,7 +90,7 @@ export default function Locais({ navigation }) {
         console.log('A imagem é:', item.imagem);
     };
 
-    const handleAddLocal = async (form) => {
+    const handleAddLocal = async (form, errorResponse) => {
         try {
             const response = await fetch(`${config.urlRoot}locais/`, {
                 method: 'POST',
@@ -106,8 +107,20 @@ export default function Locais({ navigation }) {
             if (response.ok) {
                 //setIsFormVisible(false);
                 buscaDados();
-            } else { console.error('Erro ao adicionar o novo local:', data.error); }
-        } catch (error) { console.error('Erro ao adicionar o novo local:', error); }
+                console.log("if");
+            } else if (response.status === 400) {
+                // A resposta contém erros de validação
+                const errorResponse = await response.json();
+                setErrorResponse(errorResponse);
+                console.log("else if");
+                //setErrorMessages(errorResponse.errors);
+            } else {
+                console.error('Erro ao adicionar o novo local:', data.error);
+                console.log("else");            }
+        } catch (error) {
+            console.error('Erro ao adicionar o novo local:', error);
+            console.log("catch");
+        }
     };
 
     const handleCloseForm = () => {
@@ -149,6 +162,7 @@ export default function Locais({ navigation }) {
                     value={searchText}
                     onChangeText={text => setSearchText(text)}
                 />
+
 
                 <Table style={css.tableContainerListar}>
                     <Row
@@ -224,6 +238,7 @@ export default function Locais({ navigation }) {
                                 onEditLocal={handleEditLocal}
                                 localData={localData}
                                 onClose={handleCloseForm}
+                                errorResponse={errorResponse}
                             />
                         )}
                     </View>
