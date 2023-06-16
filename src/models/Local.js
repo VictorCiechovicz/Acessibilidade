@@ -23,8 +23,7 @@ class Local extends Model {
       mensagem2: {
         type: DataTypes.TEXT,
         allowNull: true,
-        validate: {
-          
+        validate: {          
         }
       },
       audio: {

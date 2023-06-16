@@ -10,8 +10,21 @@ export default function form({ onAddLocal, onEditLocal, localData, onClose, erro
   const [imagem, setImagem] = useState(localData?.imagem || '');
   const [qr, setQr] = useState(localData?.qr || '');
 
-  console.log("Aqui");
-  console.log('errorResponse:', errorResponse);
+  //console.log("Aqui");
+  //console.log('errorResponse:', errorResponse);
+  //console.log(JSON.parse(errorResponse));
+
+ 
+  useEffect(() => {
+    if (errorResponse) {
+      const errorMessages = Object.values(errorResponse);
+      errorMessages.forEach((errorMessage) => {
+        console.log(errorMessage);
+      });
+    }
+  }, [errorResponse]);
+  
+     
 
   useEffect(() => {
     if (localData) {
@@ -78,7 +91,7 @@ export default function form({ onAddLocal, onEditLocal, localData, onClose, erro
         onChangeText={setLocal}
         placeholder="Digite o local"
       />
-      {errorResponse && errorResponse.local && (
+      {errorResponse.local && (
         <Text style={css.errorText}>{errorResponse.local}</Text>
       )}
       <Text style={css.formLabel}>Mensagem 1:</Text>
@@ -89,7 +102,9 @@ export default function form({ onAddLocal, onEditLocal, localData, onClose, erro
         placeholder="Digite a mensagem 1"
       />
       {errorResponse && errorResponse.mensagem1 && (
-        <Text style={css.errorText}>{errorResponse.mensagem1}</Text>
+        <>         
+          <Text style={css.errorText}>{errorResponse.mensagem1}</Text>
+        </>
       )}
 
       <Text style={css.formLabel}>Mensagem 2:</Text>

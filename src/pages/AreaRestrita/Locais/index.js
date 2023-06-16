@@ -17,9 +17,7 @@ export default function Locais({ navigation }) {
     const [searchText, setSearchText] = useState('');
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [localData, setLocalData] = useState(null);
-    const [errorResponse, setErrorResponse] = useState(null);
-
-
+    const [errorResponse, setErrorResponse] = useState('');
 
     useEffect(() => {
         buscaDados();
@@ -90,7 +88,7 @@ export default function Locais({ navigation }) {
         console.log('A imagem é:', item.imagem);
     };
 
-    const handleAddLocal = async (form, errorResponse) => {
+    const handleAddLocal = async (form) => {
         try {
             const response = await fetch(`${config.urlRoot}locais/`, {
                 method: 'POST',
@@ -104,19 +102,21 @@ export default function Locais({ navigation }) {
                 }),
                 headers: { 'Content-Type': 'application/json' },
             });
+            const errorResponse = await response.json();
+            setErrorResponse(errorResponse);
             if (response.ok) {
                 //setIsFormVisible(false);
                 buscaDados();
                 console.log("if");
             } else if (response.status === 400) {
-                // A resposta contém erros de validação
-                const errorResponse = await response.json();
-                setErrorResponse(errorResponse);
-                console.log("else if");
+                // A resposta contém erros de validação                
+                console.log("else if", JSON.stringify(errorResponse));
+
                 //setErrorMessages(errorResponse.errors);
             } else {
                 console.error('Erro ao adicionar o novo local:', data.error);
-                console.log("else");            }
+                console.log("else");
+            }
         } catch (error) {
             console.error('Erro ao adicionar o novo local:', error);
             console.log("catch");
@@ -250,6 +250,5 @@ export default function Locais({ navigation }) {
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
-
     );
 }
